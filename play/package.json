@@ -1,0 +1,17 @@
+{
+  "name": "@y-element-plus/play",
+  "private": "true",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vitejs/plugin-vue": "^2.0.1",
+    "vite": "^2.7.12",
+    "vue": "^3.2.26"
+  }
+}

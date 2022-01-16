@@ -1,0 +1,9 @@
+// 声明公共的sass方法
+@use "config" as *;
+@forward "config";
+
+// as * , 使用 $namespace 取值
+// as xx, 使用 xx.$namespace 取值
+
+// @import 多次引用会多次打包, @use解决这个问题
+// @forward 希望这个变量变成全局变量,而不是仅在当前文件夹能使用
