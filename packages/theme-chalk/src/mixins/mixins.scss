@@ -7,3 +7,28 @@
 
 // @import 多次引用会多次打包, @use解决这个问题
 // @forward 希望这个变量变成全局变量,而不是仅在当前文件夹能使用
+// BEM
+@mixin b($block) {
+  $B: $namespace + "-" + $block !global;
+
+  .#{$B} {
+    @content;
+  }
+}
+@mixin m($modifier) {
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $modifier {
+    $currentSelector: #{$currentSelector +
+      $selector +
+      $modifier-separator +
+      $unit +
+      ","};
+  }
+
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}

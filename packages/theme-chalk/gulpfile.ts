@@ -1,23 +1,19 @@
-import { dest, series, src } from "gulp"
+import { dest, series, src, parallel } from "gulp"
 import path from "path"
 import autoPrefixer from "gulp-autoprefixer"
 import gulpSass from "gulp-sass"
 import dartSass from "sass"
 import cleanCss from "gulp-clean-css"
 import chalk from "chalk"
-import { projectRoot } from "../../build/utils/paths"
+import { projRoot } from "../../build/utils/paths"
 
 const sass = gulpSass(dartSass)
 
-const buildOutput = path.resolve(projectRoot, "dist")
-const distBundle = path.resolve(buildOutput, "./element-plus/theme-chalk")
-
-// scss -> css
-// -> packages/theme-chalk/lib
-function compileToLib() {
-  return src("./src/*.scss")
+const copy = (input, output) => () => src(input).pipe(dest(output))
+const buildThemeChalk = (output) => () => {
+  return src(path.resolve(__dirname, "src/*.scss"))
     .pipe(sass.sync())
-    .pipe(autoPrefixer())
+    .pipe(autoPrefixer({ cascade: true }))
     .pipe(
       cleanCss({}, (details) => {
         // console.log(
@@ -27,19 +23,13 @@ function compileToLib() {
         // )
       })
     )
-    .pipe(dest("./lib"))
+    .pipe(dest(output))
 }
-function copyFontToLib() {
-  return src("./src/fonts/**").pipe(dest("./lib/fonts"))
-}
-
-// packages/theme-chalk/lib to dist/theme-chalk
-function copyLibToDist() {
-  return src("./lib/**").pipe(dest(distBundle))
-}
-
-function copySrcToDist() {
-  return src("./src/**").pipe(dest(path.resolve(distBundle, "./src")))
-}
-
-export default series(compileToLib, copyFontToLib, copyLibToDist, copySrcToDist)
+const build = parallel(
+  copy("src/**", path.resolve(projRoot, "dist/element-plus/theme-chalk/src/")),
+  series(
+    buildThemeChalk("dist/"),
+    copy("dist/**", path.resolve(projRoot, "dist/element-plus/theme-chalk/"))
+  )
+)
+export default build
