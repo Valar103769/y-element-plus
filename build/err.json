@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "export const withInstall = (comp) => {\n  comp.install = function(app) {\n    app.component(comp.name, comp);\n  };\n  return comp;\n};\n",
+  "dynamicallyImportedIds": [],
+  "dynamicImporters": [],
+  "hasModuleSideEffects": true,
+  "id": "/Users/valar/demo/z-plus-2/packages/utils/with-install.ts",
+  "implicitlyLoadedAfterOneOf": [],
+  "implicitlyLoadedBefore": [],
+  "importedIds": [],
+  "importers": [],
+  "isEntry": true,
+  "isExternal": false,
+  "isIncluded": null,
+  "meta": {},
+  "syntheticNamedExports": false
+}

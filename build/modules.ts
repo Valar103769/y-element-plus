@@ -3,6 +3,8 @@ import { rollup, OutputOptions } from "rollup"
 import type { Plugin, ResolveIdHook } from "rollup"
 import glob from "fast-glob"
 import path from "path"
+// import vue from 'unplugin-vue/rollup'
+import esbuild from "rollup-plugin-esbuild"
 import css from "rollup-plugin-css-only"
 import vue from "rollup-plugin-vue"
 import commonjs from "@rollup/plugin-commonjs" // 解析node_modules 下的commonjs文件
@@ -15,23 +17,35 @@ const excludeFiles = (files: string[]) => {
   )
 }
 
+const generateExternal = async () => {
+  const { dependencies = {}, peerDependencies = {} } = await import(
+    path.resolve(projRoot, "packages/element-plus/package.json")
+  )
+  console.log(dependencies, peerDependencies)
+
+  const pkgs = [
+    ...new Set([
+      ...Object.keys(dependencies),
+      ...Object.keys(peerDependencies),
+      "element-plus/theme-chalk",
+    ]),
+  ]
+  return (id) => pkgs.some((pkg) => id === pkg || id.startsWith(`${pkg}/`))
+}
+
 function ElementPlusAlias(): any {
   return {
     name: "element-plus-alias-plugin",
-    resolveId(id: string, importer: any, options: any) {
-      console.log("ElementPlusAlias", id)
+
+    resolveId(id: string, importer, options) {
       if (!id.startsWith("@y-element-plus")) return
 
       if (id.startsWith("@y-element-plus/theme-chalk")) {
         return {
-          id: id.replaceAll(
-            "@y-element-plus/theme-chalk",
-            "y-element-plus/theme-chalk"
-          ),
+          id: id.replaceAll("@y-element-plus", "y-element-plus"),
           external: "absolute",
         }
       }
-      // return null
       return this.resolve(id, importer, { skipSelf: true, ...options })
     },
   }
@@ -49,12 +63,21 @@ export const buildModules = async () => {
   console.log("input", input)
   const inputOptions = {
     input,
-    // 插件执行顺序?
+    // 插件有执行顺序要求,先左后右
     plugins: [
-      // ElementPlusAlias(),
+      ElementPlusAlias(),
       nodeResolve(),
       commonjs(),
+
+      // css(),
+      vue({
+        target: "browser",
+      }),
+      esbuild({
+        target: "es2018",
+      }),
     ],
+    external: await generateExternal(),
   }
 
   // https://rollupjs.org/guide/en/#big-list-of-options
@@ -66,8 +89,7 @@ export const buildModules = async () => {
       dir: path.resolve(projRoot, "dist/element-plus", "es"),
       exports: "auto", // default
       preserveModules: true,
-      // /Users/valar/demo/z-plus-2/packages/element-plus
-      // /Users/valar/demo/z-plus-2/dist/element-plus/es
+
       preserveModulesRoot: path.resolve(projRoot, "packages/element-plus"),
       sourcemap: true,
       entryFileNames: `[name].mjs`,

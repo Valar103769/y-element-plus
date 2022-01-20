@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from "vue";
+import type { ExtractPropTypes } from "vue"
 
 export const iconProps = {
   size: {
@@ -7,6 +7,6 @@ export const iconProps = {
   color: {
     type: String,
   },
-};
+}
 
-export type iconProps = ExtractPropTypes<typeof iconProps>;
+export type iconProps = ExtractPropTypes<typeof iconProps>

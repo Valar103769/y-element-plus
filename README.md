@@ -77,16 +77,16 @@ packages 目录下的所有包都需要处理, 目前只实现了三个包, 打�
 - 全量引用
 
 ```js
-import "element-plus/dist/index.css";
+import "element-plus/dist/index.css"
 ```
 
 - 按需引用
 
 ```js
 // vite.config.ts
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import AutoImport from "unplugin-auto-import/vite"
+import Components from "unplugin-vue-components/vite"
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 
 export default {
   plugins: [
@@ -98,7 +98,7 @@ export default {
       resolvers: [ElementPlusResolver()],
     }),
   ],
-};
+}
 ```
 
 所以 build 后, 这两个地方需要有样式代码
@@ -109,20 +109,71 @@ export default {
 
 ```js
 // @filename: element-plus/es/components/icon/style/css.ts
-import "@element-plus/components/base/style/css"; // 服务端渲染时,不加载这个文件
-import "@element-plus/theme-chalk/el-icon.css";
+import "@element-plus/components/base/style/css" // 服务端渲染时,不加载这个文件
+import "@element-plus/theme-chalk/el-icon.css"
 
 // element-plus/es/components/icon/style/index.ts
-import "@element-plus/components/base/style";
-import "@element-plus/theme-chalk/src/icon.scss";
+import "@element-plus/components/base/style"
+import "@element-plus/theme-chalk/src/icon.scss"
 
 // @element-plus/components/base/style/css.ts
-import "@element-plus/theme-chalk/base.css";
+import "@element-plus/theme-chalk/base.css"
 
 // @element-plus/components/base/style/index.ts
-import "@element-plus/theme-chalk/src/base.scss";
+import "@element-plus/theme-chalk/src/base.scss"
 ```
 
-QA:
+错误信息:
 
 1. sucrase
+
+2. '@y-element-plus/utils/with-install' is imported by ../packages/components/icon/index.ts, but could not be resolved – treating it as an external dependency
+
+```js
+// @file packages/components/icon/index.ts
+import { withInstall } from "@y-element-plus/utils/with-install"
+```
+
+rollup 对于 import 语句的默认处理方式是: 根据 node 的查找规则, 找到依赖模块的文件路径,结合当前
+的模块路径, 计算出一个相对路径, 去替换掉原先的这个字符串
+
+`@y-element-plus/utils/with-install` => `../../xxx`
+报错原因是 ,@y-element-plus 在 node_modules 下是个软连接, 无法转成相对路径, 所以查不到该模块,
+需要我们手动处理,
+需要手写一个 rollup 插件
+
+```js
+import { withInstall } from "@y-element-plus/utils/with-install"
+```
+
+- Error: Unexpected character '@' (Note that you need plugins to import files that are not JavaScript)
+
+原因: 解析到
+
+```js
+// @file  components/icon/style/index.ts
+import "@y-element-plus/theme-chalk/src/icon.scss"
+```
+
+会去读取 scss 文件的内容, 因不识别 @use './mixins/mixins.scss' 而产生错误
+解决办法: 创建一个 rollup 插件, 使 rollup 跳过 theme-chalk 下的文件,跳过的方式是添加为外部依赖
+
+```js
+function ElementPlusAlias(): any {
+  return {
+    name: "element-plus-alias-plugin",
+
+    resolveId(id: string, importer, options) {
+      if (!id.startsWith("@y-element-plus")) return
+
+      if (id.startsWith("@y-element-plus/theme-chalk")) {
+        return {
+          id: id.replaceAll("@y-element-plus", "y-element-plus"),
+          external: "absolute",
+        }
+      }
+      return this.resolve(id, importer, { skipSelf: true, ...options })
+    },
+  }
+}
+```
