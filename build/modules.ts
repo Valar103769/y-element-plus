@@ -59,14 +59,14 @@ export const buildModules = async () => {
     })
   )
 
-  // /Users/valar/demo/z-plus-2/packages/components/icon/src/icon.ts'
-  console.log("input", input)
   const inputOptions = {
     input,
     // 插件有执行顺序要求,先左后右
     plugins: [
       ElementPlusAlias(),
-      nodeResolve(),
+      nodeResolve({
+        extensions: [".mjs", ".js", ".json", ".ts"],
+      }),
       commonjs(),
 
       // css(),
@@ -90,7 +90,7 @@ export const buildModules = async () => {
       exports: "auto", // default
       preserveModules: true,
 
-      preserveModulesRoot: path.resolve(projRoot, "packages/element-plus"),
+      preserveModulesRoot: path.resolve(projRoot, "packages"),
       sourcemap: true,
       entryFileNames: `[name].mjs`,
     },
