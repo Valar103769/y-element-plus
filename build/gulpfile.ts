@@ -26,7 +26,7 @@ export default series(
 
   parallel(
     runTask("buildModules"),
-    // runTask("buildFullBundle"),
+    runTask("buildFullBundle"),
     // runTask("generateTypesDefinitions"),
     // runTask("buildHelper"),
     series(
@@ -44,3 +44,4 @@ export default series(
 )
 
 export * from "./modules"
+export * from "./full-bundle"

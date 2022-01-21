@@ -3,12 +3,14 @@ import { rollup, OutputOptions } from "rollup"
 import type { Plugin, ResolveIdHook } from "rollup"
 import glob from "fast-glob"
 import path from "path"
+import filesize from "rollup-plugin-filesize"
 // import vue from 'unplugin-vue/rollup'
 import esbuild from "rollup-plugin-esbuild"
 import css from "rollup-plugin-css-only"
 import vue from "rollup-plugin-vue"
 import commonjs from "@rollup/plugin-commonjs" // 解析node_modules 下的commonjs文件
 import nodeResolve from "@rollup/plugin-node-resolve" // 解析node_modules 下的文件, 默认是main字段
+import { cyan, bold, yellow, green } from "chalk"
 
 const excludeFiles = (files: string[]) => {
   const excludes = ["node_modules", "gulpfile", "dist"]
@@ -33,7 +35,7 @@ const generateExternal = async () => {
   return (id) => pkgs.some((pkg) => id === pkg || id.startsWith(`${pkg}/`))
 }
 
-function ElementPlusAlias(): any {
+export function ElementPlusAlias(): any {
   return {
     name: "element-plus-alias-plugin",
 
@@ -76,6 +78,13 @@ export const buildModules = async () => {
       esbuild({
         target: "es2018",
       }),
+      // filesize({
+      //   reporter: (opt, outputOptions, info) => {
+      //     return `${cyan(bold(info.fileName))}: bundle size ${yellow(
+      //       info.bundleSize
+      //     )} -> minified ${green(info.minSize)}`
+      //   },
+      // }),
     ],
     external: await generateExternal(),
   }
