@@ -27,6 +27,7 @@ importers:
       sucrase: ^3.20.3
       ts-morph: ^13.0.2
       vue: ^3.2.27
+      y-dotenv: ^1.0.5
     dependencies:
       '@y-element-plus/components': link:packages/components
       '@y-element-plus/theme-chalk': link:packages/theme-chalk
@@ -52,6 +53,7 @@ importers:
       sucrase: 3.20.3
       ts-morph: 13.0.2
       vue: 3.2.27
+      y-dotenv: 1.0.5
 
   packages/components:
     specifiers: {}
@@ -4777,6 +4779,10 @@ packages:
   /xtend/4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
+    dev: true
+
+  /y-dotenv/1.0.5:
+    resolution: {integrity: sha512-ST9F8TtY5alqlNp68QkPvrLoWqbzSAkptNMD6la6JmWO2V1QhgK4k8jd+EKNXLo8fyOfzMWTK7WG8WVjB3IXdw==}
     dev: true
 
   /y18n/3.2.2:
