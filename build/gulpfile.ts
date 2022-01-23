@@ -27,7 +27,7 @@ export default series(
   parallel(
     runTask("buildModules"),
     runTask("buildFullBundle"),
-    // runTask("generateTypesDefinitions"),
+    runTask("generateTypesDefinitions"),
     // runTask("buildHelper"),
     series(
       /* dist/element-plus/theme-chalk/ */
@@ -35,9 +35,6 @@ export default series(
         /* -C: 在 <path> 中启动 pnpm ，而不是当前的工作目录。 */
         run("pnpm run -C packages/theme-chalk build")
       ),
-      // dist/element-plus/theme-chalk/index.css
-      // =>
-      // dist/element-plus/dist/index.css
       copyFullStyle
     )
   )
@@ -45,3 +42,4 @@ export default series(
 
 export * from "./modules"
 export * from "./full-bundle"
+export * from "./types-definitions"

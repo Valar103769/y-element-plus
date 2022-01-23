@@ -1,3 +1,3 @@
-import { Icon } from "@y-element-plus/components/icon"
+import { ElIcon } from "@y-element-plus/components/icon"
 
-export default [Icon]
+export default [ElIcon]

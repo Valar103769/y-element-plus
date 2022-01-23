@@ -10,7 +10,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "declaration": false,
+    "declaration": true,
     "sourceMap": true,
     "removeComments": true, // 删除注释
     "allowSyntheticDefaultImports": true,

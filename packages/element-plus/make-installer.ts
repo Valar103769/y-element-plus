@@ -1,4 +1,5 @@
-export const makeInstaller = async (installables) => {
+import { version } from "./version"
+export const makeInstaller = (installables) => {
   const install = (app) => {
     installables.forEach((element) => {
       app.use(element)
@@ -7,6 +8,6 @@ export const makeInstaller = async (installables) => {
 
   return {
     install,
-    version: process.env.version,
+    version,
   }
 }

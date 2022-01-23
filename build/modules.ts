@@ -99,7 +99,7 @@ export const buildModules = async () => {
       exports: "auto", // default
       preserveModules: true,
 
-      preserveModulesRoot: path.resolve(projRoot, "packages"),
+      preserveModulesRoot: path.resolve(projRoot, "packages/element-plus"),
       sourcemap: true,
       entryFileNames: `[name].mjs`,
     },

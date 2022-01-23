@@ -9,6 +9,7 @@ importers:
       '@rollup/plugin-replace': ^3.0.1
       '@types/gulp': ^4.0.9
       '@types/rollup-plugin-css-only': 3.1.0
+      '@vue/compiler-sfc': ^3.2.28
       '@y-element-plus/components': workspace:^1.0.0
       '@y-element-plus/theme-chalk': workspace:^1.0.0
       '@y-element-plus/utils': workspace:^1.0.0
@@ -24,6 +25,7 @@ importers:
       rollup-plugin-vue: 6.0.0
       sass: ^1.48.0
       sucrase: ^3.20.3
+      ts-morph: ^13.0.2
       vue: ^3.2.27
     dependencies:
       '@y-element-plus/components': link:packages/components
@@ -36,6 +38,7 @@ importers:
       '@rollup/plugin-replace': 3.0.1_rollup@2.64.0
       '@types/gulp': 4.0.9
       '@types/rollup-plugin-css-only': 3.1.0
+      '@vue/compiler-sfc': 3.2.28
       chalk: 5.0.0
       esbuild: 0.14.11
       fast-glob: 3.2.11
@@ -44,9 +47,10 @@ importers:
       rollup-plugin-css-only: 3.1.0_rollup@2.64.0
       rollup-plugin-esbuild: 4.8.2_esbuild@0.14.11+rollup@2.64.0
       rollup-plugin-filesize: 9.1.2
-      rollup-plugin-vue: 6.0.0
+      rollup-plugin-vue: 6.0.0_@vue+compiler-sfc@3.2.28
       sass: 1.48.0
       sucrase: 3.20.3
+      ts-morph: 13.0.2
       vue: 3.2.27
 
   packages/components:
@@ -270,6 +274,15 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
+  /@ts-morph/common/0.12.2:
+    resolution: {integrity: sha512-m5KjptpIf1K0t0QL38uE+ol1n+aNn9MgRq++G3Zym1FlqfN+rThsXlp3cAgib14pIeXF7jk3UtJQOviwawFyYg==}
+    dependencies:
+      fast-glob: 3.2.11
+      minimatch: 3.0.4
+      mkdirp: 1.0.4
+      path-browserify: 1.0.1
+    dev: true
+
   /@types/clean-css/4.2.5:
     resolution: {integrity: sha512-NEzjkGGpbs9S9fgC4abuBvTpVwE3i+Acu9BBod3PUyjDVZcNsGx61b8r2PphR61QGPnn0JHVs5ey6/I4eTrkxw==}
     dependencies:
@@ -420,6 +433,15 @@ packages:
       source-map: 0.6.1
     dev: true
 
+  /@vue/compiler-core/3.2.28:
+    resolution: {integrity: sha512-mQpfEjmHVxmWKaup0HL6tLMv2HqjjJu7XT4/q0IoUXYXC4xKG8lIVn5YChJqxBTLPuQjzas7u7i9L4PAWJZRtA==}
+    dependencies:
+      '@babel/parser': 7.16.8
+      '@vue/shared': 3.2.28
+      estree-walker: 2.0.2
+      source-map: 0.6.1
+    dev: true
+
   /@vue/compiler-dom/3.2.26:
     resolution: {integrity: sha512-smBfaOW6mQDxcT3p9TKT6mE22vjxjJL50GFVJiI0chXYGU/xzC05QRGrW3HHVuJrmLTLx5zBhsZ2dIATERbarg==}
     dependencies:
@@ -432,6 +454,13 @@ packages:
     dependencies:
       '@vue/compiler-core': 3.2.27
       '@vue/shared': 3.2.27
+    dev: true
+
+  /@vue/compiler-dom/3.2.28:
+    resolution: {integrity: sha512-KA4yXceLteKC7VykvPnViUixemQw3A+oii+deSbZJOQKQKVh1HLosI10qxa8ImPCyun41+wG3uGR+tW7eu1W6Q==}
+    dependencies:
+      '@vue/compiler-core': 3.2.28
+      '@vue/shared': 3.2.28
     dev: true
 
   /@vue/compiler-sfc/3.2.26:
@@ -464,6 +493,21 @@ packages:
       source-map: 0.6.1
     dev: true
 
+  /@vue/compiler-sfc/3.2.28:
+    resolution: {integrity: sha512-zB0WznfEBb4CbGBHzhboHDKVO5nxbkbxxFo9iVlxObP7a9/qvA5kkZEuT7nXP52f3b3qEfmVTjIT23Lo1ndZdQ==}
+    dependencies:
+      '@babel/parser': 7.16.8
+      '@vue/compiler-core': 3.2.28
+      '@vue/compiler-dom': 3.2.28
+      '@vue/compiler-ssr': 3.2.28
+      '@vue/reactivity-transform': 3.2.28
+      '@vue/shared': 3.2.28
+      estree-walker: 2.0.2
+      magic-string: 0.25.7
+      postcss: 8.4.5
+      source-map: 0.6.1
+    dev: true
+
   /@vue/compiler-ssr/3.2.26:
     resolution: {integrity: sha512-2mywLX0ODc4Zn8qBoA2PDCsLEZfpUGZcyoFRLSOjyGGK6wDy2/5kyDOWtf0S0UvtoyVq95OTSGIALjZ4k2q/ag==}
     dependencies:
@@ -476,6 +520,13 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.2.27
       '@vue/shared': 3.2.27
+    dev: true
+
+  /@vue/compiler-ssr/3.2.28:
+    resolution: {integrity: sha512-z8rck1PDTu20iLyip9lAvIhaO40DUJrw3Zv0mS4Apfh3PlfWpF5dhsO5g0dgt213wgYsQIYVIlU9cfrYapqRgg==}
+    dependencies:
+      '@vue/compiler-dom': 3.2.28
+      '@vue/shared': 3.2.28
     dev: true
 
   /@vue/reactivity-transform/3.2.26:
@@ -494,6 +545,16 @@ packages:
       '@babel/parser': 7.16.8
       '@vue/compiler-core': 3.2.27
       '@vue/shared': 3.2.27
+      estree-walker: 2.0.2
+      magic-string: 0.25.7
+    dev: true
+
+  /@vue/reactivity-transform/3.2.28:
+    resolution: {integrity: sha512-zE8idNkOPnBDd2tKSIk84hOQZ+jXKvSy5FoIIVlcNEJHnCFnQ3maqeSJ9KoB2Rf6EXUhFTiTDNRlYlXmT2uHbQ==}
+    dependencies:
+      '@babel/parser': 7.16.8
+      '@vue/compiler-core': 3.2.28
+      '@vue/shared': 3.2.28
       estree-walker: 2.0.2
       magic-string: 0.25.7
     dev: true
@@ -566,6 +627,10 @@ packages:
 
   /@vue/shared/3.2.27:
     resolution: {integrity: sha512-rpAn9k6O08Lvo7ekBIAnkOukX/4EsEQLPrRJBKhIEasMsOI5eX0f6mq1sDUSY7cgAqWw2d7QtP74CWxdXoyKxA==}
+    dev: true
+
+  /@vue/shared/3.2.28:
+    resolution: {integrity: sha512-eMQ8s9j8FpbGHlgUAaj/coaG3Q8YtMsoWL/RIHTsE3Ex7PUTyr7V91vB5HqWB5Sn8m4RXTHGO22/skoTUYvp0A==}
     dev: true
 
   /@vueuse/core/7.5.3_vue@3.2.27:
@@ -1173,6 +1238,12 @@ packages:
       inherits: 2.0.4
       process-nextick-args: 2.0.1
       readable-stream: 2.3.7
+    dev: true
+
+  /code-block-writer/11.0.0:
+    resolution: {integrity: sha512-GEqWvEWWsOvER+g9keO4ohFoD3ymwyCnqY3hoTr7GZipYFwEhMHJw+TtV0rfgRhNImM6QWZGO2XYjlJVyYT62w==}
+    dependencies:
+      tslib: 2.3.1
     dev: true
 
   /code-point-at/1.1.0:
@@ -3454,6 +3525,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /path-browserify/1.0.1:
+    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
+    dev: true
+
   /path-dirname/1.0.2:
     resolution: {integrity: sha1-zDPSTVJeCZpTiMAzbG4yuRYGCeA=}
     dev: true
@@ -3871,11 +3946,12 @@ packages:
       - supports-color
     dev: true
 
-  /rollup-plugin-vue/6.0.0:
+  /rollup-plugin-vue/6.0.0_@vue+compiler-sfc@3.2.28:
     resolution: {integrity: sha512-oVvUd84d5u73M2HYM3XsMDLtZRIA/tw2U0dmHlXU2UWP5JARYHzh/U9vcxaN/x/9MrepY7VH3pHFeOhrWpxs/Q==}
     peerDependencies:
       '@vue/compiler-sfc': '*'
     dependencies:
+      '@vue/compiler-sfc': 3.2.28
       debug: 4.3.3
       hash-sum: 2.0.0
       rollup-pluginutils: 2.8.2
@@ -4364,6 +4440,17 @@ packages:
 
   /ts-interface-checker/0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
+    dev: true
+
+  /ts-morph/13.0.2:
+    resolution: {integrity: sha512-SjeeHaRf/mFsNeR3KTJnx39JyEOzT4e+DX28gQx5zjzEOuFs2eGrqeN2PLKs/+AibSxPmzV7RD8nJVKmFJqtLA==}
+    dependencies:
+      '@ts-morph/common': 0.12.2
+      code-block-writer: 11.0.0
+    dev: true
+
+  /tslib/2.3.1:
+    resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: true
 
   /tunnel-agent/0.6.0:
